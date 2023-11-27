@@ -1,0 +1,9 @@
+[Unit]
+Description=gps l80m39
+After=multi-user.target
+
+[Service]
+ExecStart=/root/wiringOP/code_220923_gateway/gps/pipegps
+
+[Install]
+WantedBy=multi-user.target

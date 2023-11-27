@@ -1,0 +1,10 @@
+[Unit]
+Description=camera00
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/Documents/camera_udp_client/camera_tx.py
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,9 @@
+[Unit]
+Description=main
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/wiringOP/code_220923_gateway/websocketble/mainwble.py
+
+[Install]
+WantedBy=multi-user.target

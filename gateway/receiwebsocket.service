@@ -1,0 +1,9 @@
+[Unit]
+Description=recei websocket setup 
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/wiringOP/code_220923_gateway/receiwebsocket/rev.py
+
+[Install]
+WantedBy=multi-user.target

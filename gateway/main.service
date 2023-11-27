@@ -1,0 +1,9 @@
+[Unit]
+Description=send websocket recei ble
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/wiringOP/code_220923_gateway/websocketble/mainwble_ver2.py
+
+[Install]
+WantedBy=multi-user.target

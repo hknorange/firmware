@@ -1,0 +1,9 @@
+[Unit]
+Description=test sd
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/Documents/camera/mountcamera.py
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=del capa
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/Documents/cap_sd/capasd.py
+
+[Install]
+WantedBy=multi-user.target
