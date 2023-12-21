@@ -1,0 +1,14 @@
+- Node1_sensor_ver1.3 
+	+ code node cảm biến nhiên liệu và cảm biến dầu
+	+ gửi data từ node tới gateway via ble
+- gateway
+	+ .service file startup dùng service ubuntu
+	+ folder code_220923_gateway: code ble, websocket
+		+ websocketble: recei data từ node via ble, recei data gps via pipe fifo, gửi data via websocket 
+		+gps: giao tiếp i2c với orangepi , gửi data gps nhận được via pipe fifo 
+		+ip: biển số xe, mac address ble, ip udp server, ip websocket
+		+portusbcamera: lấy đường dẫn usb of camera
+		+receiwebsocket: nhận data từ websocket, gửi config node
+	+ folder cap_sd: check dung lượng và xóa file trong sd card
+	+ folder camera: định dạnh địa chỉ thẻ nhớ
+	+ folder camera_udp_client: code camera client udp, reload khi disconnect internet
