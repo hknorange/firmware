@@ -12,6 +12,7 @@ import sys
 import asyncio
 from websockets.sync.client import connect
 import bluepy.btle as btle
+import socket
 
 
 global data
@@ -47,24 +48,33 @@ PATHSOCKET = PATHSOCKET.strip('\n')
 CARIP = CARIP.strip('\n')
 #print(CARIP.encode())
 
-
 def websocket_write():
+	
 	global pipe_data
 	global ble_data
+	
 	while True:
-		with connect(PATHSOCKET) as websocket:
-			#buf = "{\"name\":\"01-02-03\"," + pipe_data + "," + ble_data  + "}"
-			#a = json.loads(buf)
-			#websocket.send(a)
-			if(pipe_data != ""):
-				pipe_data = pipe_data.strip('\x00')
-			buf = "{\"name\":\"" + CARIP+"\"," + pipe_data + "," + ble_data  + "}"
-			#print("\nweb:" + buf)
-			#if(pipe_data != "") and (ble_data != ""):#abc = json.loads(buf)
-			websocket.send(buf)
-			print(pipe_data.encode())
-			print(ble_data.encode())
-		sleep(5)
+		try:
+			with connect(PATHSOCKET) as websocket:
+				#buf = "{\"name\":\"01-02-03\"," + pipe_data + "," + ble_data  + "}"
+				#a = json.loads(buf)
+				#websocket.send(a)
+				if(pipe_data != ""):
+					pipe_data = pipe_data.strip('\x00')
+				buf = "{\"name\":\"" + CARIP+"\"," + pipe_data + "," + ble_data  + "}"
+				#print("\nweb:" + buf)
+				#if(pipe_data != "") and (ble_data != ""):#abc = json.loads(buf)
+				websocket.send(buf)
+				print("gui:",str(buf))
+				#print(pipe_data.encode())
+				#print(ble_data.encode())
+			sleep(5)
+		except:
+			print("wifi error")
+			sleep(5)
+
+
+
 
 def pipe_recei():
 	global pipe_data
@@ -129,8 +139,10 @@ if __name__ == "__main__":
 	t2 = threading.Thread(target=pipe_recei)
 	t3 = threading.Thread(target=ble)
 	t4 = threading.Thread(target=sendble)
+
 	t1.start()
 	t2.start()
 	t3.start()
 	t4.start()
+
 

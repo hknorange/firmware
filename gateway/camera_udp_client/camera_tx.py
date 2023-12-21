@@ -9,12 +9,11 @@ from time import sleep
 import os
 import sys
 from datetime import datetime
-from flask import Flask, Response, render_template
 import threading
 import json
 import base64
 
-app = Flask(__name__)
+
 
 success = ""
 frame = ""
@@ -47,6 +46,7 @@ print("name card:",name_card)
 print("usb port:",usb_port)
 print("host ip:",host_ip)
 print("car ip:",car_ip)
+print("position:2")
 count_out = 0
 while(name_card == ""):
     name_card = get_name_sd()
@@ -58,35 +58,15 @@ while(name_card == ""):
 cap = cv2.VideoCapture(usb_port)
 cap.set(cv2.CAP_PROP_FPS,10)
 size_frame = (640,480)
-
+'''
 if(cap.isOpened()):
     now = datetime.now()
     date_time = now.strftime('driver_date_%d_%m_%Y time_%H_%M_%S')
     path_save = os.path.join(name_card,date_time)
-    print(path_save)
+    print("------>save:",path_save)
     #os.mkdir(path_save)
     result = cv2.VideoWriter(path_save + '.avi',cv2.VideoWriter_fourcc(*'XVID'),10,size_frame)
-
-def generate_frames():
-    while True:
-        if not success:
-            break
-        else:
-            web_frame = frame
-            ret, buffer = cv2.imencode('.jpg', web_frame)
-            frame1 = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame1 + b'\r\n')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/video')
-def video():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-def task1():
-    app.run(host='0.0.0.0', port=8880)
+'''
 def task2():
     global success
     global frame
@@ -95,6 +75,14 @@ def task2():
     s.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 100000000) # setSockoptTo open two protocols,SOL_SOCKET: Request applies to socket layer.
     port = 2323
     client_socket = (host_ip,port)
+    if(cap.isOpened()):
+	    now = datetime.now()
+	    sleep(1)
+	    date_time = now.strftime('driver_date_%d_%m_%Y time_%H_%M_%S')
+	    path_save = os.path.join(name_card,date_time)
+	    print("------>save:",path_save)	
+	    #os.mkdir(path_save)
+	    result = cv2.VideoWriter(path_save + '.avi',cv2.VideoWriter_fourcc(*'XVID'),10,size_frame)
     while True:
         success, frame = cap.read()
         now = datetime.now()
@@ -122,15 +110,14 @@ def task2():
             cv2.destroyAllWindows()
             break; 
         #print(frame)
-      
-    
-if __name__ == '__main__':
-    #t1 = threading.Thread(target = task1)
-    t2 = threading.Thread(target = task2)
-    #t3 = threading.Thread(target = task3)
-    t2.start()
-    #t1.start()
-    #t3.start()
-    #t2.join()
-    
+try:
+	while True:
+		print("------------>1----------")
+		task2()
+except:
+	print("-------------->2---error")
+
+
+
+
     

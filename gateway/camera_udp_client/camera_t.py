@@ -53,6 +53,7 @@ while(name_card == ""):
     if((name_card != "") or count_out == 10):
         break
     count_out+=1
+    print("count_out:",count_out)
     sleep(1)
 
 cap = cv2.VideoCapture(usb_port)

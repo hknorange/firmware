@@ -1,6 +1,7 @@
 [Unit]
 Description=camera01     
-After=multi-user.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 ExecStart=/usr/bin/python3 /root/Documents/camera_udp_client/camera_s.py
